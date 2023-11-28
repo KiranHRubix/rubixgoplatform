@@ -76,6 +76,8 @@ const (
 	DumpSmartContractTokenChainCmd string = "dumpsmartcontracttokenchain"
 	GetTokenBlock                  string = "gettokenblock"
 	GetSmartContractData           string = "getsmartcontractdata"
+	GetPendingTxnCmd               string = "getpendingtxns"
+	InitiateTxnFinalityCmd         string = "intitatetxnfinality"
 )
 
 var commands = []string{VersionCmd,
@@ -120,6 +122,8 @@ var commands = []string{VersionCmd,
 	DumpSmartContractTokenChainCmd,
 	GetTokenBlock,
 	GetSmartContractData,
+	GetPendingTxnCmd,
+	InitiateTxnFinalityCmd,
 }
 var commandsHelp = []string{"To get tool version",
 	"To get help",
@@ -162,7 +166,9 @@ var commandsHelp = []string{"To get tool version",
 	"This command will subscribe to a smart contract token",
 	"This command will dump the smartcontract token chain",
 	"This command gets token block",
-	"This command gets the smartcontract data from latest block"}
+	"This command gets the smartcontract data from latest block",
+	"This command will get all the pending txn yet to achieve finality",
+	"this command will intitte the txn finality for specified txnId"}
 
 type Command struct {
 	cfg                config.Config
@@ -566,6 +572,10 @@ func Run(args []string) {
 		cmd.getSmartContractData()
 	case ExecuteSmartcontractCmd:
 		cmd.executeSmartcontract()
+	case GetPendingTxnCmd:
+		cmd.getPendingTxn()
+	case InitiateTxnFinalityCmd:
+		cmd.initiateTxnFinality()
 	default:
 		cmd.log.Error("Invalid command")
 	}
