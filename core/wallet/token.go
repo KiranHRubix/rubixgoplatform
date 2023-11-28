@@ -21,6 +21,7 @@ const (
 	TokenIsFetched
 	TokenIsBurnt
 	TokenIsExecuted
+	TokenTxnFinalityPending
 )
 
 const (
