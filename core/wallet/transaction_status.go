@@ -65,9 +65,9 @@ func (w *Wallet) UpdateTxnStatus(tokenInfo []contract.TokenInfo, txnStatus int, 
 	return nil
 }
 
-func (w *Wallet) GetFinalityPendingTxn() ([]TransactionStatusMap, error) {
+func (w *Wallet) GetFinalityPendingTxn(did string) ([]TransactionStatusMap, error) {
 	var result []TransactionStatusMap
-	err := w.s.Read(TransactionStatusStorage, &result, "txn_status=?", FinlaityPending)
+	err := w.s.Read(TransactionStatusStorage, &result, "txn_status=? AND sender_did=?", FinlaityPending, did)
 	if err != nil {
 		return nil, err
 	}
