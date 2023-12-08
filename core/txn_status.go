@@ -32,8 +32,8 @@ func (c *Core) GetTxnDetails(txnId string) (wallet.TxnDetails, error) {
 
 }
 
-func (c *Core) GetFinalityPendingTxnDetails() ([]string, error) {
-	txnStatusDetails, err := c.w.GetFinalityPendingTxn()
+func (c *Core) GetFinalityPendingTxnDetails(did string) ([]wallet.TxnDetails, error) {
+	txnStatusDetails, err := c.w.GetFinalityPendingTxn(did)
 	if err != nil {
 		c.log.Error("err", err)
 		return nil, err
@@ -46,7 +46,7 @@ func (c *Core) GetFinalityPendingTxnDetails() ([]string, error) {
 	}
 
 	txnIds = c.removeDuplicates(txnIds)
-	/* result := make([]wallet.TxnDetails, 0)
+	result := make([]wallet.TxnDetails, 0)
 	for i := range txnIds {
 		txnDetails, err := c.GetTxnDetails(txnIds[i])
 		if err != nil {
@@ -55,13 +55,13 @@ func (c *Core) GetFinalityPendingTxnDetails() ([]string, error) {
 		}
 		result = append(result, txnDetails)
 	}
-	return result, nil */
+	return result, nil
 
-	return txnIds, nil
+	//return txnIds, nil
 }
 
-func (c *Core) GetFinalityPendingTxns() ([]string, error) {
-	txnStatusDetails, err := c.w.GetFinalityPendingTxn()
+func (c *Core) GetFinalityPendingTxns(did string) ([]string, error) {
+	txnStatusDetails, err := c.w.GetFinalityPendingTxn(did)
 	if err != nil {
 		c.log.Error("err", err)
 		return nil, err
