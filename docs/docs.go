@@ -521,6 +521,38 @@ const docTemplate = `{
                 }
             }
         },
+        "/api/get-pending-txn": {
+            "get": {
+                "description": "For a mentioned DID, check the finality pending txns",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Account"
+                ],
+                "summary": "get finality pending txn",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "User DID",
+                        "name": "did",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.PendingTxnIds"
+                        }
+                    }
+                }
+            }
+        },
         "/api/get-smart-contract-token-chain-data": {
             "post": {
                 "description": "This API will return smart contract token chain data",
@@ -602,6 +634,39 @@ const docTemplate = `{
                         "schema": {
                             "$ref": "#/definitions/server.RBTTransferRequestSwaggoInput"
                         }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/model.BasicResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/initiate-txn-finality": {
+            "post": {
+                "description": "Initiates the process to achieve finality of pending txn.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Account"
+                ],
+                "summary": "Txn Finality by Transcation ID",
+                "operationId": "initiate-txn-finality",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "The ID of the transaction pending finality",
+                        "name": "txnID",
+                        "in": "query",
+                        "required": true
                     }
                 ],
                 "responses": {
@@ -808,6 +873,24 @@ const docTemplate = `{
                     "type": "array",
                     "items": {
                         "$ref": "#/definitions/model.NFTStatus"
+                    }
+                }
+            }
+        },
+        "model.PendingTxnIds": {
+            "type": "object",
+            "properties": {
+                "message": {
+                    "type": "string"
+                },
+                "result": {},
+                "status": {
+                    "type": "boolean"
+                },
+                "txnIds": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
                     }
                 }
             }

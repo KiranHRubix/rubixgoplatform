@@ -44,6 +44,18 @@ definitions:
           $ref: '#/definitions/model.NFTStatus'
         type: array
     type: object
+  model.PendingTxnIds:
+    properties:
+      message:
+        type: string
+      result: {}
+      status:
+        type: boolean
+      txnIds:
+        items:
+          type: string
+        type: array
+    type: object
   server.DeploySmartContractSwaggoInput:
     properties:
       comment:
@@ -455,6 +467,27 @@ paths:
       summary: Get Data Token
       tags:
       - Data Tokens
+  /api/get-pending-txn:
+    get:
+      consumes:
+      - application/json
+      description: For a mentioned DID, check the finality pending txns
+      parameters:
+      - description: User DID
+        in: query
+        name: did
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.PendingTxnIds'
+      summary: get finality pending txn
+      tags:
+      - Account
   /api/get-smart-contract-token-chain-data:
     post:
       consumes:
@@ -514,6 +547,28 @@ paths:
           schema:
             $ref: '#/definitions/model.BasicResponse'
       summary: Initiate RBT Transfer
+      tags:
+      - Account
+  /api/initiate-txn-finality:
+    post:
+      consumes:
+      - application/json
+      description: Initiates the process to achieve finality of pending txn.
+      operationId: initiate-txn-finality
+      parameters:
+      - description: The ID of the transaction pending finality
+        in: query
+        name: txnID
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/model.BasicResponse'
+      summary: Txn Finality by Transcation ID
       tags:
       - Account
   /api/register-callback-url:
